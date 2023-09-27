@@ -1,11 +1,14 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { MoviesService } from './movies.service';
+import { Movie } from './entities/movie.entitiy';
 
 @Controller('movies')
 export class MoviesController {
+  constructor(readonly movieService : MoviesService){}
   @Get()
   getAll() {
-    return 'This will return all movies';
+    return this.movieService.getAll();
   }
   @Get("search")
   search(@Query("year") searchYear: string){
@@ -13,18 +16,18 @@ export class MoviesController {
   }
 
   @Get('/:id')
-  getOne(@Param('id') movieId: string) {
-    return `Thist will return one movie with the id: ${movieId}`;
+  getOne(@Param('id') movieId: string): Movie {
+    return this.movieService.getOne(movieId);
   }
 
   @Post()
   create(@Body() movieData) {
-    return movieData;
+    return this.movieService.create(movieData);
   }
 
   @Delete('/:id')
   remove(@Param('id') movieId: string) {
-    return `This will return delete a movie with the id: ${movieId}`;
+    return this.movieService.deleteOne(movieId);
   }
 
   @Patch('/:id')
