@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, Res } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entitiy';
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -8,8 +8,12 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 @Controller('movies')
 export class MoviesController {
   constructor(readonly movieService : MoviesService){}
+
+  //express 위에 동작 req, res는 권장하지 않는다.
+  //fastify 위에도 동작한다. 전환 지원도 많다.
   @Get()
-  getAll() {
+  getAll(@Req() req, @Res() res) {
+    res.json()
     return this.movieService.getAll();
   }
   
