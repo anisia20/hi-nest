@@ -12,8 +12,7 @@ export class MoviesController {
   //express 위에 동작 req, res는 권장하지 않는다.
   //fastify 위에도 동작한다. 전환 지원도 많다.
   @Get()
-  getAll(@Req() req, @Res() res) {
-    res.json()
+  getAll() {
     return this.movieService.getAll();
   }
   
